@@ -1,0 +1,59 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "QEMU Debug (kernel.elf)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/kernel.elf",
+      "args": [],
+      "stopAtEntry": true,
+      "externalConsole": false,
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:\\Program Files (x86)\\i686-elf-tools-windows\\bin\\i686-elf-gdb.exe",
+      "miDebuggerArgs": "-x ${workspaceFolder}/scripts/gdb_commands.gdb",
+      "debugServerPath": "C:\\Program Files\\qemu\\qemu-system-i386.exe",
+      "debugServerArgs": "-kernel kernel.elf -vga std -m 256M -s -S -no-reboot -no-shutdown",
+      "serverStarted": "QEMU",
+      "serverLaunchTimeout": 15000,
+      "preLaunchTask": "build_kernel",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Set architecture to i386",
+          "text": "set architecture i386",
+          "ignoreFailures": false
+        },
+        {
+          "description": "Load kernel symbols",
+          "text": "symbol-file ${workspaceFolder}/kernel.elf",
+          "ignoreFailures": false
+        }
+      ]
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "d:/X86操作系统/kernel",
+      "program": "d:/X86操作系统/kernel/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
