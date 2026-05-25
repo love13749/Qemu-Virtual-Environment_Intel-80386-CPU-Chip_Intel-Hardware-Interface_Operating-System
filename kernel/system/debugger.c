@@ -735,55 +735,55 @@ void debugger_run(void) {
     while (keyboard_buffer_read(&tmp));
 
     while (1) {
-        terminal_writestring("-");
-        int n = debugger_readline(line, 128);
-        if (n == 0) continue;
+        terminal_writestring("-");// 提示符
+        int n = debugger_readline(line, 128); // 读取用户输入
+        if (n == 0) continue;// 空行
 
-        int argc = tokenize(line, args, 16);
-        if (argc == 0) continue;
+        int argc = tokenize(line, args, 16);// 解析命令行参数
+        if (argc == 0) continue; // 空命令
 
-        char cmd = args[0][0];
+        char cmd = args[0][0];// 命令首字符
 
-        switch (cmd) {
-            case '?': cmd_help(); break;
-            case 'q': case 'Q':
+        switch (cmd) { // 识别命令
+            case '?': cmd_help(); break; // 帮助
+            case 'q': case 'Q': // 退出调试器
                 terminal_writestring("\n  Returning to OS.\n");
                 return;
-            case 'r': case 'R': cmd_r(argc, args); break;
-            case 'd': case 'D': cmd_d(argc, args); break;
-            case 'e': case 'E': cmd_e(argc, args); break;
-            case 'u': case 'U': cmd_u(argc, args); break;
-            case 'g': case 'G': cmd_g(argc, args); break;
-            case 't': case 'T': cmd_t(argc, args); break;
-            case 'b': case 'B':
+            case 'r': case 'R': cmd_r(argc, args); break; // 显示CPU寄存器
+            case 'd': case 'D': cmd_d(argc, args); break; // 显示内存
+            case 'e': case 'E': cmd_e(argc, args); break; // 修改内存
+            case 'u': case 'U': cmd_u(argc, args); break; // 反汇编
+            case 'g': case 'G': cmd_g(argc, args); break; // 继续执行
+            case 't': case 'T': cmd_t(argc, args); break; // 单步执行
+            case 'b': case 'B': // 设置断点
                 if (strcmp(args[0], "bc") == 0 || strcmp(args[0], "BC") == 0) cmd_bc(argc, args);
                 else if (strcmp(args[0], "bl") == 0 || strcmp(args[0], "BL") == 0) cmd_bl();
                 else cmd_b(argc, args);
-                break;
-            case 'a': case 'A': cmd_a(argc, args); break;
-            case 'f': case 'F': cmd_f(argc, args); break;
-            case 's': case 'S': cmd_s(argc, args); break;
-            case 'c': case 'C': cmd_c(argc, args); break;
-            case 'm': case 'M': cmd_m(argc, args); break;
-            case 'h': case 'H': cmd_h(argc, args); break;
+                break; // 设置断点
+            case 'a': case 'A': cmd_a(argc, args); break; // 汇编
+            case 'f': case 'F': cmd_f(argc, args); break; // 填充内存
+            case 's': case 'S': cmd_s(argc, args); break; // 搜索内存
+            case 'c': case 'C': cmd_c(argc, args); break; // 对比内存
+            case 'm': case 'M': cmd_m(argc, args); break; // 移动内存
+            case 'h': case 'H': cmd_h(argc, args); break; // 十六进制计算
             default:
-                if (strcmp(args[0], "map") == 0) {
+                if (strcmp(args[0], "map") == 0) { // 显示系统内存映射
                     memory_map_dump();
-                } else if (strcmp(args[0], "heap") == 0) {
+                } else if (strcmp(args[0], "heap") == 0) { // 显示内核堆信息
                     memory_heap_dump();
-                } else if (strcmp(args[0], "slab") == 0) {
+                } else if (strcmp(args[0], "slab") == 0) { // 显示Slab分配器信息
                     memory_slab_dump();
-                } else if (strcmp(args[0], "ps") == 0) {
+                } else if (strcmp(args[0], "ps") == 0) { // 显示进程列表
                     process_list();
-                } else if (strcmp(args[0], "cls") == 0) {
+                } else if (strcmp(args[0], "cls") == 0) { // 清除屏幕
                     terminal_clear();
-                } else if (strcmp(args[0], "dma") == 0) {
+                } else if (strcmp(args[0], "dma") == 0) { // 显示DMA控制器状态
                     dma_dump_status();
-                } else if (strcmp(args[0], "dmach") == 0) {
+                } else if (strcmp(args[0], "dmach") == 0) { // 显示DMA通道信息
                     dma_dump_channels();
-                } else if (strcmp(args[0], "dmademo") == 0) {
+                } else if (strcmp(args[0], "dmademo") == 0) { // 运行DMA内存复制演示
                     dma_demo();
-                } else {
+                } else { // 未知命令
                     terminal_writestring("  Unknown command. Type ? for help.\n");
                 }
                 break;
