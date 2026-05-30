@@ -233,17 +233,17 @@ const note_t melody_8bit_bgm[] = {
 void sound_init(void) {
     terminal_writestring("Initializing PC Speaker...\n");
 
-    sound_playing = false;
-    sound_muted = false;
-    sound_volume = 100;
-    melody_playing = false;
-    melody_loop = false;
-    current_melody = NULL;
-    current_note_index = 0;
-    note_started = false;
-    note_play_tick = 0;
+    sound_playing = false; // 初始化为未播放状态
+    sound_muted = false;   // 初始化为非静音状态
+    sound_volume = 100;    // 初始化音量为最大
+    melody_playing = false;// 初始化为未播放旋律
+    melody_loop = false;   // 初始化为非循环播放
+    current_melody = NULL; // 初始化为未播放旋律
+    current_note_index = 0;// 初始化当前音符索引
+    note_started = false;  // 初始化为未开始音符播放
+    note_play_tick = 0;    // 初始化为音符播放进度为0
 
-    speaker_disable();
+    speaker_disable();     // 确保蜂鸣器初始状态为关闭
 
     terminal_writestring("PC Speaker initialized.\n");
     terminal_writestring("  Supported: tones, melodies, background music\n");
@@ -317,13 +317,13 @@ void sound_loop_melody(const note_t* melody) {
         speaker_stop();
     }
 
-    current_melody = melody;
-    current_note_index = 0;
-    note_started = false;
-    note_play_tick = 0;
-    melody_loop = true;
-    melody_playing = true;
-    sound_playing = true;
+    current_melody = melody; // 设置当前播放的旋律
+    current_note_index = 0;  // 重置当前音符索引
+    note_started = false;    // 重置音符播放状态 
+    note_play_tick = 0;      // 重置音符播放进度
+    melody_loop = true;      // 开启循环播放
+    melody_playing = true;   // 开启播放旋律 
+    sound_playing = true;    // 设置正在播放状态（即使旋律本身可能是静音的）
 }
 
 void sound_set_volume(uint8_t volume) {

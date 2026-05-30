@@ -8,7 +8,7 @@
 // ======================================================================
 
 #define PAGE_SIZE           4096            // 4KB 标准页
-#define PAGE_SHIFT          12
+#define PAGE_SHIFT          12              // 页偏移位数 (2^12 = 4096)
 #define MAX_ORDER           10              // 最大阶 (2^10 = 1024 pages ≈ 4MB 连续块)
 #define MEMORY_MAX_PAGES    0x100000        // 最多 4GB
 #define BITMAP_WORDS        (MEMORY_MAX_PAGES / 32)

@@ -143,7 +143,7 @@ void kernel_main() {
     // 10. 演示 DMA 数据传输
     dma_demo();
 
-        // 11. 启动背景音乐（循环播放 8-bit 风格背景音乐）
+    // 11. 启动背景音乐（循环播放 8-bit 风格背景音乐）
     terminal_writestring("\nStarting background music...\n");
     sound_loop_melody(melody_8bit_bgm);
 
